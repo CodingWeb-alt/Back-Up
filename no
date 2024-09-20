@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body{
+            background: navy;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ben Pearman's Academic Calendar 2024-2025</h1>
+    <div id="calendar"></div>
+
+    <script src="calendar.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Box with Save Functionality</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body{
+            background: rgb(33, 33, 121);
+            color: grey;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weekly Agenda</h1>
+    <textarea id="inputText" rows="10" cols="50" placeholder="Type something..."></textarea>
+    <br>
+    <button id="saveButton">Save</button>
+    <button id="clearButton">Clear</button>
+    <div id="savedMessage"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+------------------------------------------------------------------------------------------------------------------------------- ^^^HTML^^^--------------------------------------
+const calendar = document.getElementById('calendar');
+const months = [
+    { name: 'August', year: 2024, days: 31, startDay: 4 },  // August starts on a Thursday in 2024
+    { name: 'September', year: 2024, days: 30, startDay: 0 }, // September starts on a Sunday in 2024
+    { name: 'October', year: 2024, days: 31, startDay: 2 },
+    { name: 'November', year: 2024, days: 30, startDay: 5 },
+    { name: 'December', year: 2024, days: 31, startDay: 0 },
+    { name: 'January', year: 2025, days: 31, startDay: 3 },
+    { name: 'February', year: 2025, days: 28, startDay: 6 }, // Not a leap year, so 28 days
+    { name: 'March', year: 2025, days: 31, startDay: 6 },
+    { name: 'April', year: 2025, days: 30, startDay: 2 },
+    { name: 'May', year: 2025, days: 31, startDay: 4 },
+    { name: 'June', year: 2025, days: 30, startDay: 0 }
+];
+
+const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+function createCalendar() {
+    months.forEach((month) => {
+        // Create month and year header
+        const header = document.createElement('header');
+        header.textContent = `${month.name} ${month.year}`;
+        calendar.appendChild(header);
+
+        // Create days of the week row
+        const daysRow = document.createElement('div');
+        daysRow.className = 'days-row';
+        daysOfWeek.forEach(day => {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'day-name';
+            dayElement.textContent = day;
+            daysRow.appendChild(dayElement);
+        });
+        calendar.appendChild(daysRow);
+
+        // Create calendar grid
+        const grid = document.createElement('div');
+        grid.className = 'calendar';
+        calendar.appendChild(grid);
+
+        // Add empty boxes for days before the start of the month
+        for (let i = 0; i < month.startDay; i++) {
+            const emptyDay = document.createElement('div');
+            emptyDay.className = 'empty-day';
+            grid.appendChild(emptyDay);
+        }
+
+        // Create day boxes
+        for (let i = 1; i <= month.days; i++) {
+            const day = document.createElement('div');
+            day.className = 'day';
+            day.textContent = i;
+            // Click event to redirect to data input page
+            day.onclick = () => window.location.href = `data.html?date=${month.name}%20${i},%20${month.year}`;
+            grid.appendChild(day);
+        }
+    });
+}
+
+createCalendar();
+document.addEventListener('DOMContentLoaded', () => {
+    const inputText = document.getElementById('inputText');
+    const savedMessage = document.getElementById('savedMessage');
+
+    // Load saved text if it exists
+    const savedText = localStorage.getItem('savedText');
+    if (savedText) {
+        inputText.value = savedText;
+        savedMessage.textContent = 'Previously saved text loaded.';
+    }
+
+    // Save text when the "Save" button is clicked
+    document.getElementById('saveButton').addEventListener('click', () => {
+        const text = inputText.value;
+        localStorage.setItem('savedText', text);
+        savedMessage.textContent = 'Text saved!';
+    });
+
+    // Clear the saved text and textarea content
+    document.getElementById('clearButton').addEventListener('click', () => {
+        localStorage.removeItem('savedText');
+        inputText.value = '';
+        savedMessage.textContent = 'Text cleared!';
+    });
+});
+----------------------------------------------------------------------------------------------------------^^^JavaScript^^^----------------------------------------------------------------------------
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+header {
+    font-weight: bold;
+    margin: 20px 0;
+    font-size: 20px;
+}
+
+.day-name {
+    font-weight: bold;
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+.day, .empty-day {
+    border: 1px solid #ddd;
+    padding: 20px;
+    cursor: pointer;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-day {
+    background-color: #f0f0f0;
+    cursor: default;
+}
+
+.day:hover {
+    background-color: #d3e9ff;
+}
+
+textarea {
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+}
+
+#savedData {
+    margin-top: 20px;
+    font-size: 16px;
+    color: green;
+}
+
+.days-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-bottom: 10px;
+}
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+textarea {
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+button {
+    margin: 5px;
+    padding: 10px;
+}
+
+#savedMessage {
+    margin-top: 20px;
+    font-size: 16px;
+    color: green;
+}
+-----------------------------------------^^^CSS^^^---------------------------------------------------------------------------------------------------------------------------------------------
