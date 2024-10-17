@@ -34,14 +34,17 @@
     </style>
 </head>
 <body>
+    <div class="weeklyAgenda">
     <h1>Weekly Agenda</h1>
     <textarea id="inputText" rows="10" cols="50" placeholder="Type something..."></textarea>
     <br>
     <button id="saveButton">Save</button>
     <button id="clearButton">Clear</button>
     <div id="savedMessage"></div>
-
+    </div>
     <script src="script.js"></script>
+
+    <img src="https://th.bing.com/th/id/R.bf1e1726a5e84038d5dc75a02506e802?rik=iInH44dmn2Nonw&riu=http%3a%2f%2fwallpup.com%2fwp-content%2fuploads%2f2013%2f04%2fSunset-at-Maui-Hawaii-Wallpaper.jpg&ehk=i6ZcSRZU9Rub0tkFmGBQF1jMrF7ZwJhjj6pBVltP3Bo%3d&risl=&pid=ImgRaw&r=0">
 </body>
 </html>
 ------------------------------------------------------------------------------------------------------------------------------- ^^^HTML^^^--------------------------------------
@@ -217,5 +220,11 @@ button {
     margin-top: 20px;
     font-size: 16px;
     color: green;
+}
+.weeklyAgenda {
+    background-color: white;
+
+    <img src="https://th.bing.com/th/id/R.bf1e1726a5e84038d5dc75a02506e802?rik=iInH44dmn2Nonw&riu=http%3a%2f%2fwallpup.com%2fwp-content%2fuploads%2f2013%2f04%2fSunset-at-Maui-Hawaii-Wallpaper.jpg&ehk=i6ZcSRZU9Rub0tkFmGBQF1jMrF7ZwJhjj6pBVltP3Bo%3d&risl=&pid=ImgRaw&r=0" alt="" style="width: 50px; height: auto;">
+
 }
 -----------------------------------------^^^CSS^^^---------------------------------------------------------------------------------------------------------------------------------------------
